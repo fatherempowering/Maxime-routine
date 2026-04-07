@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Father Empowering — Daily OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noir: #111111;
+    --anth: #1e1e1e;
+    --card: #242424;
+    --orange: #C85A00;
+    --ol: #E8751A;
+    --wh: #ffffff;
+    --mu: rgba(255,255,255,0.45);
+    --br: rgba(200,90,0,0.2);
+    --teal: #5DCAA5;
+    --blue: #85B7EB;
+    --pink: #ED93B1;
+    --green: #97C459;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--noir);
+    color: var(--wh);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 40px;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--anth);
+    border-bottom: 2px solid var(--orange);
+    padding: 20px 20px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2.5px;
+    color: var(--wh);
+    line-height: 1;
+  }
+  .brand-sub {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--mu);
+    margin-top: 3px;
+  }
+  .date-box {
+    text-align: right;
+  }
+  .date-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    color: var(--orange);
+    letter-spacing: 1.5px;
+    line-height: 1;
+  }
+  .time-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--wh);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .progress-wrap {
+    margin-top: 12px;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--mu);
+    margin-bottom: 5px;
+  }
+  .progress-track {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin: 14px 14px 0;
+    background: var(--card);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .section-header {
+    padding: 11px 16px 10px;
+    border-bottom: 1px solid var(--br);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    color: var(--orange);
+  }
+  .section-count {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--mu);
+    letter-spacing: 1px;
+  }
+
+  /* AFFIRMATION */
+  .affirmation-body {
+    padding: 14px 16px;
+  }
+  .aff-line {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--wh);
+    display: block;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+  }
+  .aff-line:last-child { border-bottom: none; }
+  .aff-line em {
+    color: var(--ol);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* SCHEDULE */
+  .sched-item {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .sched-item:last-child { border-bottom: none; }
+  .sched-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    padding: 10px 10px;
+    min-width: 52px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1.2;
+  }
+  .sched-bar { width: 2px; flex-shrink: 0; }
+  .sched-content { padding: 10px 12px; flex: 1; }
+  .sched-label { font-size: 12px; font-weight: 500; color: var(--wh); line-height: 1.3; }
+  .sched-sub { font-size: 10px; color: var(--mu); margin-top: 2px; }
+  .sched-dur { font-size: 9px; letter-spacing: 1px; margin-top: 3px; font-weight: 500; }
+
+  .s-mind .sched-time { color: var(--teal); } .s-mind .sched-bar { background: var(--teal); } .s-mind .sched-dur { color: var(--teal); }
+  .s-body .sched-time { color: var(--orange); } .s-body .sched-bar { background: var(--orange); } .s-body .sched-dur { color: var(--ol); }
+  .s-biz .sched-time { color: var(--ol); } .s-biz .sched-bar { background: var(--ol); } .s-biz .sched-dur { color: var(--ol); }
+  .s-work .sched-time { color: var(--blue); } .s-work .sched-bar { background: var(--blue); } .s-work .sched-dur { color: var(--blue); }
+  .s-fam .sched-time { color: var(--pink); } .s-fam .sched-bar { background: var(--pink); } .s-fam .sched-dur { color: var(--pink); }
+  .s-train .sched-time { color: var(--green); } .s-train .sched-bar { background: var(--green); } .s-train .sched-dur { color: var(--green); }
+  .s-rest .sched-time { color: var(--mu); } .s-rest .sched-bar { background: rgba(255,255,255,0.1); } .s-rest .sched-dur { color: var(--mu); }
+
+  /* CHECKLIST */
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: background 0.15s;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item:active { background: rgba(255,255,255,0.03); }
+  .check-item.done { opacity: 0.45; }
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--orange);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: transparent;
+  }
+  .check-item.done .checkbox {
+    background: var(--orange);
+    border-color: var(--orange);
+  }
+  .checkmark {
+    display: none;
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+  .check-item.done .checkmark { display: block; }
+  .check-text { flex: 1; }
+  .check-label { font-size: 13px; color: var(--wh); font-weight: 500; line-height: 1.3; }
+  .check-item.done .check-label { text-decoration: line-through; }
+  .check-cat {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .cat-sales { color: var(--orange); }
+  .cat-content { color: var(--teal); }
+  .cat-delivery { color: var(--blue); }
+  .cat-body { color: var(--green); }
+  .cat-family { color: var(--pink); }
+
+  /* RESET NOTE */
+  .reset-note {
+    text-align: center;
+    font-size: 10px;
+    color: var(--mu);
+    padding: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  /* MOTTO */
+  .motto {
+    margin: 14px 14px 0;
+    background: rgba(200,90,0,0.08);
+    border: 1px solid var(--br);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .motto-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--orange);
+    line-height: 1.6;
+  }
+  .motto-sub {
+    font-size: 10px;
+    color: var(--mu);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section { animation: fadeIn 0.3s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .motto { animation: fadeIn 0.3s ease 0.2s both; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="brand">FATHER EMPOWERING</div>
+      <div class="brand-sub">DAILY OPERATING SYSTEM</div>
+    </div>
+    <div class="date-box">
+      <div class="date-display" id="date-display"></div>
+      <div class="time-display" id="time-display"></div>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>DAILY TASKS</span>
+      <span id="progress-text">0 / 9 complete</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- AFFIRMATION -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--orange)"></div>
+    <div class="section-title">Morning Affirmation — Read Out Loud</div>
+  </div>
+  <div class="affirmation-body">
+    <span class="aff-line">I am <em>Maxime Bourdon.</em> Father. Foreman. Athlete. Coach.</span>
+    <span class="aff-line">I wake before the world because I am building something it has not seen yet.</span>
+    <span class="aff-line">Every hour I invest in this business is an hour <em>Abigaëlle</em> will one day understand.</span>
+    <span class="aff-line">I do not need to feel ready. I need to <em>show up.</em></span>
+    <span class="aff-line">Construction pays my bills. <em>Father Empowering is my legacy.</em></span>
+    <span class="aff-line">Today I do the work that moves me one step closer to coaching full time.</span>
+    <span class="aff-line">I am not tired. I am <em>building momentum.</em></span>
+    <span class="aff-line">A strong father does not wait for the perfect moment. He <em>creates it.</em></span>
+    <span class="aff-line">I focus on the input, not the outcome. <em>The outcome will come.</em></span>
+  </div>
+</div>
+
+<!-- MORNING SCHEDULE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--teal)"></div>
+    <div class="section-title">Morning Ritual — 3:30 to 5:10</div>
+  </div>
+  <div class="sched-item s-mind">
+    <div class="sched-time">3:30</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Wake + Affirmation</div>
+      <div class="sched-sub">No phone. Read the board. Read above.</div>
+      <div class="sched-dur">5 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-mind">
+    <div class="sched-time">3:35</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Meditation</div>
+      <div class="sched-sub">Seated. Breath only. Eyes closed.</div>
+      <div class="sched-dur">10 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-body">
+    <div class="sched-time">3:45</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Cold Plunge</div>
+      <div class="sched-sub">10–12 min in. Non-negotiable.</div>
+      <div class="sched-dur">15 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-body">
+    <div class="sched-time">4:00</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Yoga / Mobility</div>
+      <div class="sched-sub">L5 + knees focus. Full 30 min.</div>
+      <div class="sched-dur">30 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-biz">
+    <div class="sched-time">4:30</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Business Sprint</div>
+      <div class="sched-sub">One job: hook / DM replies / story CTA.</div>
+      <div class="sched-dur">25 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-rest">
+    <div class="sched-time">4:55</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Pack lunch + ready</div>
+      <div class="sched-sub">Already prepped night before.</div>
+      <div class="sched-dur">15 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-work">
+    <div class="sched-time">5:10</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Out the door</div>
+      <div class="sched-sub">On site 6:00 AM.</div>
+      <div class="sched-dur">COMMUTE</div>
+    </div>
+  </div>
+  <div class="sched-item s-biz">
+    <div class="sched-time">3:15 PM</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">POWER BLOCK</div>
+      <div class="sched-sub">Reel / DMs / client work / sales calls.</div>
+      <div class="sched-dur">90 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-fam">
+    <div class="sched-time">4:45 PM</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Family — Abigaëlle</div>
+      <div class="sched-sub">Phone down. Fully present.</div>
+      <div class="sched-dur">90 MIN</div>
+    </div>
+  </div>
+  <div class="sched-item s-rest">
+    <div class="sched-time">9:00 PM</div>
+    <div class="sched-bar"></div>
+    <div class="sched-content">
+      <div class="sched-label">Lights out — pack tomorrow</div>
+      <div class="sched-sub">Lunch packed. Clothes out. 3 priorities set.</div>
+      <div class="sched-dur">HARD STOP</div>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY CHECKLIST -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--ol)"></div>
+    <div class="section-title">Daily Checklist</div>
+    <div class="section-count" id="check-count">0 / 9</div>
+  </div>
+
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Post 1 reel with strong hook</div>
+      <div class="check-cat cat-content">CONTENT</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Reply to all story replies + DMs</div>
+      <div class="check-cat cat-sales">SALES</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Send 5 outbound DMs to warm leads</div>
+      <div class="check-cat cat-sales">SALES</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Post 2 stories with CTA trigger word</div>
+      <div class="check-cat cat-content">CONTENT</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Check in with active clients</div>
+      <div class="check-cat cat-delivery">DELIVERY</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Film b-roll or talking head clip</div>
+      <div class="check-cat cat-content">CONTENT</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Hit protein target — log meals</div>
+      <div class="check-cat cat-body">BODY</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Track revenue + pipeline</div>
+      <div class="check-cat cat-sales">BUSINESS</div>
+    </div>
+  </div>
+  <div class="check-item" onclick="toggle(this)">
+    <div class="checkbox"><div class="checkmark"></div></div>
+    <div class="check-text">
+      <div class="check-label">Present with Abigaëlle — no phone</div>
+      <div class="check-cat cat-family">FAMILY</div>
+    </div>
+  </div>
+
+  <div class="reset-note" id="reset-note">Checkboxes reset automatically each morning at 3:30 AM.</div>
+</div>
+
+<div class="motto">
+  <div class="motto-text">FOCUS ON THE INPUT<br>NOT THE OUTCOME</div>
+  <div class="motto-sub">Abigaëlle is watching. Keep showing up.</div>
+</div>
+
+<script>
+  const TOTAL = 9;
+  const STORAGE_KEY = 'fe_checks';
+  const RESET_HOUR = 3;
+  const RESET_MIN = 30;
+
+  function getToday() {
+    const d = new Date();
+    return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      const now = new Date();
+      const resetToday = new Date();
+      resetToday.setHours(RESET_HOUR, RESET_MIN, 0, 0);
+      const savedDate = new Date(parsed.timestamp);
+      if (savedDate < resetToday && now >= resetToday) return null;
+      if (parsed.day !== getToday()) return null;
+      return parsed.checks;
+    } catch(e) { return null; }
+  }
+
+  function saveState(checks) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      checks,
+      day: getToday(),
+      timestamp: Date.now()
+    }));
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll('.check-item');
+    const done = document.querySelectorAll('.check-item.done').length;
+    const pct = Math.round((done / TOTAL) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `${done} / ${TOTAL} complete`;
+    document.getElementById('check-count').textContent = `${done} / ${TOTAL}`;
+    if (done === TOTAL) {
+      document.getElementById('reset-note').textContent = 'All done. You showed up today.';
+      document.getElementById('reset-note').style.color = 'var(--teal)';
+    }
+  }
+
+  function toggle(el) {
+    el.classList.toggle('done');
+    const items = document.querySelectorAll('.check-item');
+    const checks = Array.from(items).map(i => i.classList.contains('done'));
+    saveState(checks);
+    updateProgress();
+  }
+
+  function initChecks() {
+    const saved = loadState();
+    if (saved) {
+      const items = document.querySelectorAll('.check-item');
+      saved.forEach((done, i) => {
+        if (done && items[i]) items[i].classList.add('done');
+      });
+    }
+    updateProgress();
+  }
+
+  function updateClock() {
+    const now = new Date();
+    const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    document.getElementById('date-display').textContent =
+      `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
+    const h = now.getHours().toString().padStart(2,'0');
+    const m = now.getMinutes().toString().padStart(2,'0');
+    document.getElementById('time-display').textContent = `${h}:${m}`;
+  }
+
+  initChecks();
+  updateClock();
+  setInterval(updateClock, 30000);
+</script>
+</body>
+</html>
